@@ -4,9 +4,19 @@ import java.util.List;
 
 public class Assignment {
 
+    private static final double SENIOR_BONUS_FACTOR = 1.5;
+
     private Worker worker;
     private List<Zone> zones;
     private double vendorBonus;
+
+    public double getBonus() {
+        if (getWorker().isJunior()) {
+            return vendorBonus;
+        } else {
+            return vendorBonus * SENIOR_BONUS_FACTOR;
+        }
+    }
 
     public double getVendorBonus() {
         return vendorBonus;
