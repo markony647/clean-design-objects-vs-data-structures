@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class FundCalculatorITTest {
     @Test(expected = WrongZoneTypeException.class)
     public void shouldThrowExceptionWhenZoneWithWrongType() {
         assign(new Worker(250, 30), singletonList(new Zone("Other", 5.0, 5.0)));
-        fundCalculator.getFundBalance(assignments);
+        fundCalculator.calculateBalance(assignments);
     }
 
     @Test
@@ -164,7 +163,7 @@ public class FundCalculatorITTest {
     }
 
     private void assertBalance(double expected) {
-        assertEquals(expected, fundCalculator.getFundBalance(assignments), DELTA);
+        assertEquals(expected, fundCalculator.calculateBalance(assignments), DELTA);
     }
 
 }

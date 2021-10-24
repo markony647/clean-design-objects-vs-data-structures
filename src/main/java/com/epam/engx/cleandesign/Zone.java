@@ -26,20 +26,8 @@ public class Zone {
         return height * width;
     }
 
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
     public void setApertures(List<Aperture> apertures) {
         this.apertures = apertures;
-    }
-
-    public List<Aperture> getApertures() {
-        return apertures;
     }
 
     public String getType() {
