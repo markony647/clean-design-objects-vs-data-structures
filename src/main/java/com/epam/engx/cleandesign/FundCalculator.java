@@ -17,8 +17,7 @@ public class FundCalculator {
     private double calculateRevenue(List<Assignment> assignments) {
         double bill = 0.0;
         for (Assignment assignment : assignments) {
-            List<Zone> zones = assignment.getZones();
-            bill += summing(zones, billCalculator::calculateZoneBillPrice);
+            bill += summing(assignment.getZones(), billCalculator::calculateZoneBillPrice);
         }
         return bill;
     }
@@ -27,7 +26,7 @@ public class FundCalculator {
         double salary = 0.0;
         for (Assignment assignment : assignments) {
             double area = summing(assignment.getZones(), Zone::getBillableArea);
-            salary += assignment.calculateSalaryFund(area) + assignment.getBonus();
+            salary += assignment.calculateSalaryFundWithBonus(area);
         }
         return salary;
     }
