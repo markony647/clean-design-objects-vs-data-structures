@@ -10,8 +10,10 @@ public class BillCalculator {
         this.materialPriceCalculator = materialPriceCalculator;
     }
 
-    public Double calculateZoneBillPrice(Zone zone) {
-        return getZoneBillPrice(zone);
+    public Double calculateAssignmentBillPrice(Assignment assignment) {
+        return assignment.getZones().stream()
+                .map(this::getZoneBillPrice)
+                .reduce(0.0, Double::sum);
     }
 
     private Double getZoneBillPrice(Zone zone) {

@@ -8,8 +8,8 @@ public class Assignment {
 
     private static final double SENIOR_BONUS_FACTOR = 1.5;
 
-    private Worker worker;
-    private List<Zone> zones;
+    private final Worker worker;
+    private final List<Zone> zones;
     private double vendorBonus;
 
     public Assignment(Worker worker, List<Zone> zones, double vendorBonus) {
@@ -28,6 +28,10 @@ public class Assignment {
         this.vendorBonus = vendorBonus;
     }
 
+    public List<Zone> getZones() {
+        return zones;
+    }
+
     private double getAllZonesBillableArea() {
         return summing(zones, Zone::getBillableArea);
     }
@@ -35,18 +39,13 @@ public class Assignment {
     private double getBonus() {
         if (worker.hasSeniorityBonus()) {
             return vendorBonus * SENIOR_BONUS_FACTOR;
-        } else {
-            return vendorBonus;
         }
+        return vendorBonus;
     }
 
     private void validateBonus(double vendorBonus) {
         if (vendorBonus < 0) {
             throw new IllegalArgumentException("Vendor bonus should be equal or grater than 0");
         }
-    }
-
-    public List<Zone> getZones() {
-        return zones;
     }
 }

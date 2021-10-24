@@ -19,7 +19,7 @@ public class FundCalculator {
     private double calculateRevenue(List<Assignment> assignments) {
         double bill = 0.0;
         for (Assignment assignment : assignments) {
-            bill += summing(assignment.getZones(), billCalculator::calculateZoneBillPrice);
+            bill += billCalculator.calculateAssignmentBillPrice(assignment);
         }
         return bill;
     }
