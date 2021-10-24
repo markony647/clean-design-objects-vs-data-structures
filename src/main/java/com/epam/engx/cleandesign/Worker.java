@@ -18,32 +18,23 @@ public class Worker {
         this.isJunior = isJunior;
     }
 
-    public int getPaidDays(Double area) {
-        return (int) Math.ceil(area / amountPerDay);
-    }
-
-    public double calculateSalary(Double area) {
-        return getPaidDays(area) * calculateSalary();
-    }
-
-    public double calculateSalary() {
-        double baseSalary = getBaseSalary();
+    public double getDailySalary() {
         if (hasSeniorityBonus()) {
-            return baseSalary * SENIOR_SALARY_FACTOR;
+            return dailyRate * SENIOR_SALARY_FACTOR;
         }
-        return baseSalary;
+        return dailyRate;
     }
 
     public boolean hasSeniorityBonus() {
         return !isJunior;
     }
 
-    private double getBaseSalary() {
-        return dailyRate;
+    public double calculateSalary(double area) {
+        return getPaidDays(area) * getDailySalary();
     }
 
-    public boolean isJunior() {
-        return isJunior;
+    private int getPaidDays(Double area) {
+        return (int) Math.ceil(area / amountPerDay);
     }
 
 }

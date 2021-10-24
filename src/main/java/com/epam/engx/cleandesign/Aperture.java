@@ -13,4 +13,5 @@ public class Aperture {
     public double getArea() {
         return width * height;
     }
+
 }
