@@ -12,9 +12,20 @@ public class Assignment {
     private List<Zone> zones;
     private double vendorBonus;
 
+    public Assignment(Worker worker, List<Zone> zones, double vendorBonus) {
+        this.worker = worker;
+        this.zones = zones;
+        this.vendorBonus = vendorBonus;
+    }
+
     public double calculateSalaryFundWithBonus() {
         double area = getAllZonesBillableArea();
         return worker.calculateSalary(area) + getBonus();
+    }
+
+    public void setVendorBonus(double vendorBonus) {
+        validateBonus(vendorBonus);
+        this.vendorBonus = vendorBonus;
     }
 
     private double getAllZonesBillableArea() {
@@ -29,19 +40,13 @@ public class Assignment {
         }
     }
 
-    public void setVendorBonus(double vendorBonus) {
-        this.vendorBonus = vendorBonus;
-    }
-
-    public void setWorker(Worker worker) {
-        this.worker = worker;
+    private void validateBonus(double vendorBonus) {
+        if (vendorBonus < 0) {
+            throw new IllegalArgumentException("Vendor bonus should be equal or grater than 0");
+        }
     }
 
     public List<Zone> getZones() {
         return zones;
-    }
-
-    public void setZones(List<Zone> zones) {
-        this.zones = zones;
     }
 }

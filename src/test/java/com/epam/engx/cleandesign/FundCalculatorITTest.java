@@ -157,10 +157,7 @@ public class FundCalculatorITTest {
     }
 
     private void assign(Worker worker, List<Zone> zones) {
-        Assignment assignment = new Assignment();
-        assignment.setWorker(worker);
-        assignment.setZones(zones);
-        assignment.setVendorBonus(50);
+        Assignment assignment = new Assignment(worker, zones, 50);
         assignments.add(assignment);
     }
 
