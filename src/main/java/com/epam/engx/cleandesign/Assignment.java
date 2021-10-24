@@ -33,10 +33,6 @@ public class Assignment {
         this.vendorBonus = vendorBonus;
     }
 
-    public Worker getWorker() {
-        return worker;
-    }
-
     public void setWorker(Worker worker) {
         this.worker = worker;
     }

@@ -16,18 +16,16 @@ public class FundCalculatorITTest {
 
     private static final double DELTA = 0.001;
 
-    private final FundCalculator fundCalculator = new FundCalculator();
+    private FundCalculator fundCalculator;
     private final List<Assignment> assignments = new ArrayList<>();
 
     @Before
     public void setUp() {
-        BillCalculator billCalculator = new BillCalculator();
         HashMap<String, Double> zoneTypeWorkPrice = new HashMap<>();
         zoneTypeWorkPrice.put("Wall", 15.0);
         zoneTypeWorkPrice.put("Floor", 10.0);
         zoneTypeWorkPrice.put("Ceiling", 12.0);
-        billCalculator.zoneTypeWorkPrice = zoneTypeWorkPrice;
-        fundCalculator.setBillCalculator(billCalculator);
+        fundCalculator = new FundCalculator(new BillCalculator(zoneTypeWorkPrice));
     }
 
     @Test

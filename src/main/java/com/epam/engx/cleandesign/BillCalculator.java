@@ -8,7 +8,11 @@ public class BillCalculator {
     private static final int ONE_DAY_MAX_AREA = 50;
     private static final double MULTI_DAY_PRICE_FACTOR = 1.1;
 
-    public static Map<String, Double> zoneTypeWorkPrice;
+    private final Map<String, Double> zoneTypeWorkPrice;
+
+    public BillCalculator(Map<String, Double> zoneTypeWorkPrice) {
+        this.zoneTypeWorkPrice = zoneTypeWorkPrice;
+    }
 
     public Double calculateZoneBillPrice(Zone zone) {
         validateZone(zone);

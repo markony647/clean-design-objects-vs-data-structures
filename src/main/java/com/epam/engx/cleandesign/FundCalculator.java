@@ -6,7 +6,11 @@ import static com.epam.engx.cleandesign.CalculationUtil.summing;
 
 public class FundCalculator {
 
-    private BillCalculator billCalculator = new BillCalculator();
+    private BillCalculator billCalculator;
+
+    public FundCalculator(BillCalculator billCalculator) {
+        this.billCalculator = billCalculator;
+    }
 
     public double getFundBalance(List<Assignment> assignments) {
         return calculateRevenue(assignments) - calculateExpenses(assignments);
