@@ -1,8 +1,8 @@
 package com.epam.engx.cleandesign;
 
 public class Worker {
-    private double dailyRate;
-    private double amountPerDay;
+    private final double dailyRate;
+    private final double amountPerDay;
     private boolean isJunior = false;
 
     private static final double SENIOR_SALARY_FACTOR = 1.2;

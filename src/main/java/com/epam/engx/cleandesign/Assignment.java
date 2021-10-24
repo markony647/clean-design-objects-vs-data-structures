@@ -18,6 +18,10 @@ public class Assignment {
         }
     }
 
+    public double calculateSalaryFund(Double area) {
+        return worker.calculateSalary(area);
+    }
+
     public void setVendorBonus(double vendorBonus) {
         this.vendorBonus = vendorBonus;
     }
