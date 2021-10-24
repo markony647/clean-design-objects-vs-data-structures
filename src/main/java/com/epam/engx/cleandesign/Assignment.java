@@ -18,9 +18,16 @@ public class Assignment {
         this.vendorBonus = vendorBonus;
     }
 
-    public double calculateSalaryFundWithBonus() {
+    public double calculateSalaryFund() {
         double area = getAllZonesBillableArea();
-        return worker.calculateSalary(area) + getBonus();
+        return worker.calculateSalary(area);
+    }
+
+    public double getBonus() {
+        if (worker.hasSeniorityBonus()) {
+            return vendorBonus * SENIOR_BONUS_FACTOR;
+        }
+        return vendorBonus;
     }
 
     public void setVendorBonus(double vendorBonus) {
@@ -34,13 +41,6 @@ public class Assignment {
 
     private double getAllZonesBillableArea() {
         return summing(zones, Zone::getBillableArea);
-    }
-
-    private double getBonus() {
-        if (worker.hasSeniorityBonus()) {
-            return vendorBonus * SENIOR_BONUS_FACTOR;
-        }
-        return vendorBonus;
     }
 
     private void validateBonus(double vendorBonus) {

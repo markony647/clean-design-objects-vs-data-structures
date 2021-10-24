@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,11 +11,11 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
-public class FundCalculatorITTest {
+public class IncomeCalculatorITTest {
 
     private static final double DELTA = 0.001;
 
-    private FundCalculator fundCalculator;
+    private IncomeCalculator incomeCalculator;
     private final List<Assignment> assignments = new ArrayList<>();
 
     @Before
@@ -27,8 +26,9 @@ public class FundCalculatorITTest {
         zoneTypeWorkPrice.put("Ceiling", 12.0);
         MaterialPriceCalculator materialPriceCalculator = new MaterialPriceCalculator();
         WorkPriceCalculator workPriceCalculator = new WorkPriceCalculator(zoneTypeWorkPrice);
-        BillCalculator billCalculator = new BillCalculator(workPriceCalculator, materialPriceCalculator);
-        fundCalculator = new FundCalculator(billCalculator);
+        RevenueCalculator revenueCalculator = new RevenueCalculator(workPriceCalculator, materialPriceCalculator);
+        ExpensesCalculator expensesCalculator = new ExpensesCalculator();
+        incomeCalculator = new IncomeCalculator(revenueCalculator, expensesCalculator);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class FundCalculatorITTest {
     @Test(expected = WrongZoneTypeException.class)
     public void shouldThrowExceptionWhenZoneWithWrongType() {
         assign(new Worker(250, 30), singletonList(new Zone("Other", 5.0, 5.0)));
-        fundCalculator.getFundBalance(assignments);
+        incomeCalculator.calculate(assignments);
     }
 
     @Test
@@ -62,9 +62,8 @@ public class FundCalculatorITTest {
     }
 
     private Zone getWallWithApertures() {
-        Zone wall = new Zone("Wall", 10.0, 10.0);
-        wall.setApertures(asList(new Aperture(9.0, 5.0), new Aperture(9.0, 4.0)));
-        return wall;
+        List<Aperture> apertures = asList(new Aperture(9.0, 5.0), new Aperture(9.0, 4.0));
+        return new Zone("Wall", 10.0, 10.0, apertures);
     }
 
     @Test
@@ -162,7 +161,7 @@ public class FundCalculatorITTest {
     }
 
     private void assertBalance(double expected) {
-        assertEquals(expected, fundCalculator.getFundBalance(assignments), DELTA);
+        assertEquals(expected, incomeCalculator.calculate(assignments), DELTA);
     }
 
 }

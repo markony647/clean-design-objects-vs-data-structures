@@ -12,7 +12,7 @@ public class WorkPriceCalculator {
         this.zoneTypeWorkPrice = zoneTypeWorkPrice;
     }
 
-    public double getPrice(double area, String type) {
+    public double calculate(double area, String type) {
         validateType(type);
         return getTotalPrice(area, type);
     }

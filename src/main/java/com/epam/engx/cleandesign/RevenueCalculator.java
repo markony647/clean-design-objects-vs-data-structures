@@ -1,11 +1,11 @@
 package com.epam.engx.cleandesign;
 
-public class BillCalculator {
+public class RevenueCalculator {
 
     private final MaterialPriceCalculator materialPriceCalculator;
     private final WorkPriceCalculator workPriceCalculator;
 
-    public BillCalculator(WorkPriceCalculator workPriceCalculator, MaterialPriceCalculator materialPriceCalculator) {
+    public RevenueCalculator(WorkPriceCalculator workPriceCalculator, MaterialPriceCalculator materialPriceCalculator) {
         this.workPriceCalculator = workPriceCalculator;
         this.materialPriceCalculator = materialPriceCalculator;
     }
@@ -18,7 +18,7 @@ public class BillCalculator {
 
     private Double getZoneBillPrice(Zone zone) {
         double area = zone.getBillableArea();
-        return materialPriceCalculator.getPrice(area) + workPriceCalculator.getPrice(area, zone.getType());
+        return materialPriceCalculator.calculate(area) + workPriceCalculator.calculate(area, zone.getType());
     }
 
 }
