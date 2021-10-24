@@ -11,15 +11,11 @@ public class Assignment {
     private double vendorBonus;
 
     public double getBonus() {
-        if (getWorker().isJunior()) {
-            return vendorBonus;
-        } else {
+        if (worker.hasSeniorityBonus()) {
             return vendorBonus * SENIOR_BONUS_FACTOR;
+        } else {
+            return vendorBonus;
         }
-    }
-
-    public double getVendorBonus() {
-        return vendorBonus;
     }
 
     public void setVendorBonus(double vendorBonus) {

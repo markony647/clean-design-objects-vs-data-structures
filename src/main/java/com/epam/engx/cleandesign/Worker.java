@@ -23,14 +23,14 @@ public class Worker {
     }
 
     public double getDailySalary() {
-        if (isJunior) {
-            return dailyRate;
+        if (hasSeniorityBonus()) {
+            return dailyRate * SENIOR_SALARY_FACTOR;
         }
-        return dailyRate * SENIOR_SALARY_FACTOR;
+        return dailyRate;
     }
 
-    public boolean isJunior() {
-        return isJunior;
+    public boolean hasSeniorityBonus() {
+        return !isJunior;
     }
 
     public double calculateSalary(double area) {
