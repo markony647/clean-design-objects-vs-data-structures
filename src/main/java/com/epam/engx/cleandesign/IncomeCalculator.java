@@ -18,13 +18,13 @@ public class IncomeCalculator {
 
     private double calculateRevenue(List<Assignment> assignments) {
         return assignments.stream()
-                .map(revenueCalculator::calculateAssignmentBillPrice)
+                .map(revenueCalculator::calculate)
                 .reduce(0.0, Double::sum);
     }
 
     private double calculateExpenses(List<Assignment> assignments) {
         return assignments.stream()
-                .map(expensesCalculator::calculateAssignmentSalaryExpensesWithBonus)
+                .map(expensesCalculator::calculate)
                 .reduce(0.0, Double::sum);
     }
 }

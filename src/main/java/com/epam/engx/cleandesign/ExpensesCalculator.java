@@ -2,7 +2,7 @@ package com.epam.engx.cleandesign;
 
 public class ExpensesCalculator {
 
-    public double calculateAssignmentSalaryExpensesWithBonus(Assignment assignment) {
+    public double calculate(Assignment assignment) {
         return assignment.calculateSalaryFund() + assignment.getBonus();
     }
 }
