@@ -19,10 +19,14 @@ public class Zone {
     }
 
     public double getBillableArea() {
-        return getArea() - summing(apertures, Aperture::getArea);
+        return getWholeArea() - getNotBillableArea();
     }
 
-    private double getArea() {
+    private double getNotBillableArea() {
+        return summing(apertures, Aperture::getArea);
+    }
+
+    private double getWholeArea() {
         return height * width;
     }
 
