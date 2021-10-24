@@ -22,20 +22,18 @@ public class Worker {
         return (int) Math.ceil(area / amountPerDay);
     }
 
-    public double getSalaryFor(int days) {
-        double baseSalary = getBaseSalaryFor(days);
+    public double getDailySalary() {
         if (isJunior) {
-            return baseSalary;
+            return dailyRate;
         }
-        return baseSalary * SENIOR_SALARY_FACTOR;
-    }
-
-    private double getBaseSalaryFor(int days) {
-        return dailyRate * days;
+        return dailyRate * SENIOR_SALARY_FACTOR;
     }
 
     public boolean isJunior() {
         return isJunior;
     }
 
+    public double calculateSalary(double area) {
+        return getPaidDays(area) * getDailySalary();
+    }
 }

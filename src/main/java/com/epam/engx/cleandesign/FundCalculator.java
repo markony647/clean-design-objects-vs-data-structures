@@ -8,7 +8,6 @@ public class FundCalculator {
 
     private static final double SENIOR_BONUS_FACTOR = 1.5;
 
-    private SalaryCalculator salaryCalculator = new SalaryCalculator();
 
     private BillCalculator billCalculator = new BillCalculator();
 
@@ -17,7 +16,9 @@ public class FundCalculator {
         double bill = 0.0;
         for (Assignment ass : assignments) {
             double totalArea = summing(ass.getZones(), Zone::getBillableArea);
-            salaries += (salaryCalculator.calculateSalary(ass.getWorker(), totalArea) + getAssignmentBonus(ass));
+            Worker worker = ass.getWorker();
+            salaries += worker.calculateSalary(totalArea) + getAssignmentBonus(ass);
+            //salaries += (salaryCalculator.calculateSalary(ass.getWorker(), totalArea) + getAssignmentBonus(ass));
             bill += summing(ass.getZones(), billCalculator::calculateZoneBillPrice);
         }
         return bill - salaries;
