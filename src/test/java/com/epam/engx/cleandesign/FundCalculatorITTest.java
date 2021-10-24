@@ -25,7 +25,10 @@ public class FundCalculatorITTest {
         zoneTypeWorkPrice.put("Wall", 15.0);
         zoneTypeWorkPrice.put("Floor", 10.0);
         zoneTypeWorkPrice.put("Ceiling", 12.0);
-        fundCalculator = new FundCalculator(new BillCalculator(zoneTypeWorkPrice));
+        MaterialPriceCalculator materialPriceCalculator = new MaterialPriceCalculator();
+        WorkPriceCalculator workPriceCalculator = new WorkPriceCalculator(zoneTypeWorkPrice);
+        BillCalculator billCalculator = new BillCalculator(workPriceCalculator, materialPriceCalculator);
+        fundCalculator = new FundCalculator(billCalculator);
     }
 
     @Test

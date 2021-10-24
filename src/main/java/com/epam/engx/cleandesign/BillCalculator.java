@@ -8,41 +8,22 @@ public class BillCalculator {
     private static final int ONE_DAY_MAX_AREA = 50;
     private static final double MULTI_DAY_PRICE_FACTOR = 1.1;
 
-    private final Map<String, Double> zoneTypeWorkPrice;
+    private MaterialPriceCalculator materialPriceCalculator;
+    WorkPriceCalculator workPriceCalculator;
 
-    public BillCalculator(Map<String, Double> zoneTypeWorkPrice) {
-        this.zoneTypeWorkPrice = zoneTypeWorkPrice;
+    public BillCalculator(WorkPriceCalculator workPriceCalculator, MaterialPriceCalculator materialPriceCalculator) {
+        this.workPriceCalculator = workPriceCalculator;
+        this.materialPriceCalculator = materialPriceCalculator;
     }
 
     public Double calculateZoneBillPrice(Zone zone) {
-        validateZone(zone);
         return getZoneBillPrice(zone);
     }
 
     private Double getZoneBillPrice(Zone zone) {
         double area = zone.getBillableArea();
-        return getMaterialPrice(area) + getWorkPrice(area, zone.getType());
-    }
-
-    private void validateZone(Zone zone) {
-        if (isNotContainsKey(zone, zoneTypeWorkPrice))
-            throw new WrongZoneTypeException();
-    }
-
-    private boolean isNotContainsKey(Zone zone, Map<String, Double> zoneTypeWorkPrice) {
-        return !zoneTypeWorkPrice.keySet().contains(zone.getType());
-    }
-
-    private double getMaterialPrice(double area) {
-        return area * MATERIAL_AREA_FACTOR;
-    }
-
-    private double getWorkPrice(double area, String type) {
-        double price = area * zoneTypeWorkPrice.get(type);
-        if (area < ONE_DAY_MAX_AREA) {
-            return price;
-        }
-        return price * MULTI_DAY_PRICE_FACTOR;
+        return materialPriceCalculator.getPrice(area) + workPriceCalculator.getPrice(area, zone.getType());
+//        return getMaterialPrice(area) + getWorkPrice(area, zone.getType());
     }
 
 }

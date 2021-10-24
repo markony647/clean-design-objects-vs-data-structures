@@ -13,11 +13,11 @@ public class Assignment {
     private double vendorBonus;
 
     public double calculateSalaryFundWithBonus() {
-        double area = getBillableArea();
+        double area = getAllZonesBillableArea();
         return worker.calculateSalary(area) + getBonus();
     }
 
-    private double getBillableArea() {
+    private double getAllZonesBillableArea() {
         return summing(zones, Zone::getBillableArea);
     }
 
