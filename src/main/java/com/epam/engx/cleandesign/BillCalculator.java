@@ -2,8 +2,6 @@ package com.epam.engx.cleandesign;
 
 import java.util.Map;
 
-import static com.epam.engx.cleandesign.AreaUtil.getArea;
-
 public class BillCalculator {
 
     private static final double MATERIAL_AREA_FACTOR = 10;
@@ -18,7 +16,7 @@ public class BillCalculator {
     }
 
     private Double getZoneBillPrice(Zone zone) {
-        double area = getArea(zone);
+        double area = zone.getBillableArea();
         return getMaterialPrice(area) + getWorkPrice(area, zone.getType());
     }
 

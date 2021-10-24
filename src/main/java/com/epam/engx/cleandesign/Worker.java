@@ -5,6 +5,8 @@ public class Worker {
     private double amountPerDay;
     private boolean isJunior = false;
 
+    private static final double SENIOR_SALARY_FACTOR = 1.2;
+
     public Worker(double dailyRate, double amountPerDay) {
         this.dailyRate = dailyRate;
         this.amountPerDay = amountPerDay;
@@ -16,12 +18,20 @@ public class Worker {
         this.isJunior = isJunior;
     }
 
-    public double getDailyRate() {
-        return dailyRate;
+    public int getPaidDays(Double area) {
+        return (int) Math.ceil(area / amountPerDay);
     }
 
-    public double getAmountPerDay() {
-        return amountPerDay;
+    public double getSalaryFor(int days) {
+        double baseSalary = getBaseSalaryFor(days);
+        if (isJunior) {
+            return baseSalary;
+        }
+        return baseSalary * SENIOR_SALARY_FACTOR;
+    }
+
+    private double getBaseSalaryFor(int days) {
+        return dailyRate * days;
     }
 
     public boolean isJunior() {

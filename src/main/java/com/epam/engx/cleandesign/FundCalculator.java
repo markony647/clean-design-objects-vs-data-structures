@@ -16,7 +16,7 @@ public class FundCalculator {
         double salaries = 0.0;
         double bill = 0.0;
         for (Assignment ass : assignments) {
-            double totalArea = summing(ass.getZones(), AreaUtil::getArea);
+            double totalArea = summing(ass.getZones(), Zone::getBillableArea);
             salaries += (salaryCalculator.calculateSalary(ass.getWorker(), totalArea) + getAssignmentBonus(ass));
             bill += summing(ass.getZones(), billCalculator::calculateZoneBillPrice);
         }
