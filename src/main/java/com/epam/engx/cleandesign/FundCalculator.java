@@ -25,7 +25,7 @@ public class FundCalculator {
     private double calculateExpenses(List<Assignment> assignments) {
         double salary = 0.0;
         for (Assignment assignment : assignments) {
-            double area = summing(assignment.getZones(), Zone::getBillableArea);
+            double area = assignment.getBillableArea();
             salary += assignment.calculateSalaryFundWithBonus(area);
         }
         return salary;
