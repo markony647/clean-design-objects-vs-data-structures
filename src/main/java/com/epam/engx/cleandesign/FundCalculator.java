@@ -9,9 +9,7 @@ public class FundCalculator {
     private BillCalculator billCalculator = new BillCalculator();
 
     public double getFundBalance(List<Assignment> assignments) {
-        double salaryExpenses = calculateExpenses(assignments);
-        double revenue = calculateRevenue(assignments);
-        return revenue - salaryExpenses;
+        return calculateRevenue(assignments) - calculateExpenses(assignments);
     }
 
     private double calculateRevenue(List<Assignment> assignments) {
@@ -23,12 +21,9 @@ public class FundCalculator {
     }
 
     private double calculateExpenses(List<Assignment> assignments) {
-        double salary = 0.0;
-        for (Assignment assignment : assignments) {
-            double area = assignment.getBillableArea();
-            salary += assignment.calculateSalaryFundWithBonus(area);
-        }
-        return salary;
+        return assignments.stream()
+                .map(Assignment::calculateSalaryFundWithBonus)
+                .reduce(0.0, Double::sum);
     }
 
     public void setBillCalculator(BillCalculator billCalculator) {

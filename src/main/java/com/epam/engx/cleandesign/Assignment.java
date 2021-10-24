@@ -12,11 +12,12 @@ public class Assignment {
     private List<Zone> zones;
     private double vendorBonus;
 
-    public double calculateSalaryFundWithBonus(double area) {
+    public double calculateSalaryFundWithBonus() {
+        double area = getBillableArea();
         return worker.calculateSalary(area) + getBonus();
     }
 
-    public double getBillableArea() {
+    private double getBillableArea() {
         return summing(zones, Zone::getBillableArea);
     }
 
