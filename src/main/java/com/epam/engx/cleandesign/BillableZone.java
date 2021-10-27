@@ -8,7 +8,6 @@ public class BillableZone {
     private final Zone zone;
     private ZoneWithApertures zoneWithApertures;
 
-
     public BillableZone(String type, Zone wholeZone) {
         this.type = type;
         this.zone = wholeZone;
