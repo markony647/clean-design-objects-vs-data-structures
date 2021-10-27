@@ -38,19 +38,19 @@ public class IncomeCalculatorITTest {
 
     @Test(expected = WrongZoneTypeException.class)
     public void shouldThrowExceptionWhenZoneWithWrongType() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Other", 5.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Other", fiveToFiveZone())));
         incomeCalculator.calculate(assignments);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneWallAssignment() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 5.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", fiveToFiveZone())));
         assertBalance(250);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneWallAssignmentWithBigVendorBonus() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 5.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", fiveToFiveZone())));
         setBigVendorBonusToFirstAssignment();
         assertBalance(175);
     }
@@ -64,92 +64,96 @@ public class IncomeCalculatorITTest {
     private BillableZone getWallWithApertures() {
         List<Zone> zones = asList(new Zone(9.0, 5.0), new Zone(9.0, 4.0));
         ZoneWithApertures zoneWithApertures = new ZoneWithApertures(zones);
-        return new BillableZone("Wall", 10.0, 10.0, zoneWithApertures);
+        return new BillableZone("Wall", new Zone(10.0, 10.0), zoneWithApertures);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneFloorAssignment() {
-        assign(new Worker(180, 30), singletonList(new BillableZone("Floor", 5.0, 5.0)));
+        assign(new Worker(180, 30), singletonList(new BillableZone("Floor", fiveToFiveZone())));
         assertBalance(209);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneCeilingAssignment() {
-        assign(new Worker(200, 30), singletonList(new BillableZone("Ceiling", 5.0, 5.0)));
+        assign(new Worker(200, 30), singletonList(new BillableZone("Ceiling", fiveToFiveZone())));
         assertBalance(235);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneSmallCeilingAssignment() {
-        assign(new Worker(200, 30), singletonList(new BillableZone("Ceiling", 3.0, 5.0)));
+        assign(new Worker(200, 30), singletonList(new BillableZone("Ceiling", new Zone(3.0, 5.0))));
         assertBalance(15);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithTwoCeilingAssignment() {
-        assign(new Worker(200, 30), asList(new BillableZone("Ceiling", 2.0, 5.0), new BillableZone("Ceiling", 3.0, 5.0)));
+        assign(new Worker(200, 30), asList(new BillableZone("Ceiling", new Zone(2.0, 5.0)), new BillableZone("Ceiling", new Zone(3.0, 5.0))));
         assertBalance(235);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneJuniorWorkerWithOneCeilingAssignment() {
-        assign(new Worker(200, 30, true), singletonList(new BillableZone("Ceiling", 5.0, 5.0)));
+        assign(new Worker(200, 30, true), singletonList(new BillableZone("Ceiling", fiveToFiveZone())));
         assertBalance(300);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneJuniorWorkerWithOneCeilingAssignmentWithBigVendorBonus() {
-        assign(new Worker(200, 30, true), singletonList(new BillableZone("Ceiling", 5.0, 5.0)));
+        assign(new Worker(200, 30, true), singletonList(new BillableZone("Ceiling", fiveToFiveZone())));
         setBigVendorBonusToFirstAssignment();
         assertBalance(250);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneJuniorCheapWorkerWithOneCeilingAssignment() {
-        assign(new Worker(100, 30, true), singletonList(new BillableZone("Ceiling", 5.0, 5.0)));
+        assign(new Worker(100, 30, true), singletonList(new BillableZone("Ceiling", fiveToFiveZone())));
         assertBalance(400);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneSeniorCheapWorkerWithOneCeilingAssignment() {
-        assign(new Worker(180, 30), singletonList(new BillableZone("Ceiling", 5.0, 5.0)));
+        assign(new Worker(180, 30), singletonList(new BillableZone("Ceiling", fiveToFiveZone())));
         assertBalance(259);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneWallAssignmentWorksTwoDaysButLessAmountThenMaxPerDay() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 9.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", new Zone(9.0, 5.0))));
         assertBalance(450);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneWallAssignmentWorksTwoDaysAndMoreAmountThenMaxPerDay() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 11.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", new Zone(11.0, 5.0))));
         assertBalance(782.5);
     }
 
     @Test
     public void shouldCalculateBalanceWhenOneWorkerWithOneWallAssignmentWorksOneDaysButMoreAmountThenMaxPerDay() {
-        assign(new Worker(250, 60), singletonList(new BillableZone("Wall", 11.0, 5.0)));
+        assign(new Worker(250, 60), singletonList(new BillableZone("Wall", new Zone(11.0, 5.0))));
         assertBalance(1082.5);
     }
 
     @Test
     public void shouldCalculateBalanceWhenTwoWorkersWithOneWallAssignment() {
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 5.0, 5.0)));
-        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", 5.0, 5.0)));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", fiveToFiveZone())));
+        assign(new Worker(250, 30), singletonList(new BillableZone("Wall", fiveToFiveZone())));
         assertBalance(500);
     }
 
     @Test
     public void shouldCalculateBalanceForComplexTestcase() {
-        assign(new Worker(250, 40), asList(new BillableZone("Floor", 5.0, 3.0), new BillableZone("Wall", 10.0, 10.0)));
+        assign(new Worker(250, 40), asList(new BillableZone("Floor", new Zone(5.0, 3.0)), new BillableZone("Wall", new Zone(10.0, 10.0))));
         setBigVendorBonusToFirstAssignment();
         Worker worker = new Worker(200, 30, true);
-        assign(worker, asList(new BillableZone("Ceiling", 5.0, 5.0), getWallWithApertures()));
-        assign(worker, asList(new BillableZone("Ceiling", 5.0, 5.0), getWallWithApertures()));
-        assign(new Worker(280, 60), asList(new BillableZone("Wall", 1.0, 5.0), new BillableZone("Wall", 11.0, 5.0)));
+        assign(worker, asList(new BillableZone("Ceiling", fiveToFiveZone()), getWallWithApertures()));
+        assign(worker, asList(new BillableZone("Ceiling", fiveToFiveZone()), getWallWithApertures()));
+        assign(new Worker(280, 60), asList(new BillableZone("Wall", new Zone(1.0, 5.0)), new BillableZone("Wall", new Zone(11.0, 5.0))));
         assertBalance(4221.5);
+    }
+
+    private Zone fiveToFiveZone() {
+        return new Zone(5.0, 5.0);
     }
 
     private void setBigVendorBonusToFirstAssignment() {

@@ -4,37 +4,36 @@ import java.util.Collections;
 
 public class BillableZone {
 
-    private final double height;
-    private final double width;
     private final String type;
+    private final Zone zone;
     private ZoneWithApertures zoneWithApertures;
 
-    public BillableZone(String type, double height, double width) {
-        this.height = height;
-        this.width = width;
+
+    public BillableZone(String type, Zone wholeZone) {
         this.type = type;
+        this.zone = wholeZone;
         this.zoneWithApertures = new ZoneWithApertures(Collections.emptyList());
     }
 
-    public BillableZone(String type, double height, double width, ZoneWithApertures zoneWithApertures) {
-        this(type, height, width);
+    public BillableZone(String type, Zone wholeZone, ZoneWithApertures zoneWithApertures) {
+        this(type, wholeZone);
         this.zoneWithApertures = zoneWithApertures;
     }
 
     public double getBillableArea() {
-        return getWholeArea() - getNotBillableArea();
+        return getWholeArea() - getAperturesArea();
     }
 
     public String getType() {
         return type;
     }
 
-    private double getNotBillableArea() {
+    private double getAperturesArea() {
         return zoneWithApertures.getArea();
     }
 
     private double getWholeArea() {
-        return height * width;
+        return zone.getArea();
     }
 
 }
