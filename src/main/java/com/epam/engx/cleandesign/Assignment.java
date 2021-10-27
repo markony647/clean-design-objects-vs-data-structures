@@ -9,12 +9,12 @@ public class Assignment {
     private static final double SENIOR_BONUS_FACTOR = 1.5;
 
     private final Worker worker;
-    private final List<Zone> zones;
+    private final List<BillableZone> billableZones;
     private double vendorBonus;
 
-    public Assignment(Worker worker, List<Zone> zones, double vendorBonus) {
+    public Assignment(Worker worker, List<BillableZone> billableZones, double vendorBonus) {
         this.worker = worker;
-        this.zones = zones;
+        this.billableZones = billableZones;
         this.vendorBonus = vendorBonus;
     }
 
@@ -35,12 +35,12 @@ public class Assignment {
         this.vendorBonus = vendorBonus;
     }
 
-    public List<Zone> getZones() {
-        return zones;
+    public List<BillableZone> getZones() {
+        return billableZones;
     }
 
     private double getAllZonesBillableArea() {
-        return summing(zones, Zone::getBillableArea);
+        return summing(billableZones, BillableZone::getBillableArea);
     }
 
     private void validateBonus(double vendorBonus) {

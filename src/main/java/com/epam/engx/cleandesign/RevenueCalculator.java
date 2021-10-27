@@ -16,9 +16,9 @@ public class RevenueCalculator {
                 .reduce(0.0, Double::sum);
     }
 
-    private Double getZoneBillPrice(Zone zone) {
-        double area = zone.getBillableArea();
-        return materialPriceCalculator.calculate(area) + workPriceCalculator.calculate(area, zone.getType());
+    private Double getZoneBillPrice(BillableZone billableZone) {
+        double area = billableZone.getBillableArea();
+        return materialPriceCalculator.calculate(area) + workPriceCalculator.calculate(area, billableZone.getType());
     }
 
 }
