@@ -11,4 +11,9 @@ public class JuniorWorker extends Worker {
     public double getDailySalary() {
         return getDailyRate();
     }
+
+    @Override
+    public double getVendorBonus(double initialBonus) {
+        return initialBonus;
+    }
 }

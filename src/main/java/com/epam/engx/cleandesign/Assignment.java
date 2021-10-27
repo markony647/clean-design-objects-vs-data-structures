@@ -24,10 +24,7 @@ public class Assignment {
     }
 
     public double getBonus() {
-        if (worker.isSenior()) {
-            return vendorBonus * SENIOR_BONUS_FACTOR;
-        }
-        return vendorBonus;
+        return worker.getVendorBonus(vendorBonus);
     }
 
     public void setVendorBonus(double vendorBonus) {
