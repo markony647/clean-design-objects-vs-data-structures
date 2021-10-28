@@ -3,7 +3,7 @@ package com.epam.engx.cleandesign;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.engx.cleandesign.CalculationUtil.summing;
+import static com.epam.engx.cleandesign.SummingUtil.summing;
 
 public class Assignment {
 
@@ -41,11 +41,7 @@ public class Assignment {
     }
 
     private double calculateMaterialPriceForAllZones() {
-        double materialPrice = 0.0;
-        for (BillableZone billableZone : billableZones) {
-            materialPrice += billableZone.getMaterialsPrice();
-        }
-        return materialPrice;
+        return summing(billableZones, BillableZone::getMaterialsPrice);
     }
 
     private double calculateWorkPriceForZone(double area, String type) {
@@ -81,10 +77,6 @@ public class Assignment {
     public void setVendorBonus(double vendorBonus) {
         validateBonus(vendorBonus);
         this.vendorBonus = vendorBonus;
-    }
-
-    public List<BillableZone> getZones() {
-        return billableZones;
     }
 
     private double getAllZonesBillableArea() {

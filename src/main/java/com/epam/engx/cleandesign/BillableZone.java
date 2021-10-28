@@ -21,13 +21,6 @@ public class BillableZone {
         this.zoneWithApertures = zoneWithApertures;
     }
 
-//    public double getZoneBillPrice() {
-//        double billableArea = getBillableArea();
-//        getMaterialPrice(billableArea) +
-//    }
-
-
-
     public double getBillableArea() {
         return getWholeArea() - getAperturesArea();
     }
@@ -38,10 +31,6 @@ public class BillableZone {
 
     public String getType() {
         return type;
-    }
-
-    private double getMaterialPrice(double billableArea) {
-        return billableArea * MATERIAL_AREA_FACTOR;
     }
 
     private double getAperturesArea() {
