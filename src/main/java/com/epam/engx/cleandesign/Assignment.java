@@ -18,11 +18,7 @@ public class Assignment {
 
     public double calculateSalaryFund() {
         double area = getAllZonesBillableArea();
-        return worker.calculateSalary(area);
-    }
-
-    public double getBonus() {
-        return worker.getVendorBonus(vendorBonus);
+        return worker.calculateSalary(area, vendorBonus);
     }
 
     public void setVendorBonus(double vendorBonus) {

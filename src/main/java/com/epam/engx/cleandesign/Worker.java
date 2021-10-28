@@ -13,8 +13,8 @@ public abstract class Worker {
 
     public abstract double getVendorBonus(double initialBonus);
 
-    public double calculateSalary(double area) {
-        return getPaidDays(area) * getDailySalary();
+    public double calculateSalary(double area, double vendorBonus) {
+        return (getPaidDays(area) * getDailySalary()) + getVendorBonus(vendorBonus);
     }
 
     protected double getDailyRate() {
