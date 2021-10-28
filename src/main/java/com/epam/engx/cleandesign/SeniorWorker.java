@@ -7,7 +7,6 @@ public class SeniorWorker extends Worker {
 
     public SeniorWorker(double dailyRate, double amountPerDay) {
         super(dailyRate, amountPerDay);
-        setJunior(false);
     }
 
     @Override

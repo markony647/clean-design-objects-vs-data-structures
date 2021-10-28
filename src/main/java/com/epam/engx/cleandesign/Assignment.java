@@ -6,8 +6,6 @@ import static com.epam.engx.cleandesign.CalculationUtil.summing;
 
 public class Assignment {
 
-    private static final double SENIOR_BONUS_FACTOR = 1.5;
-
     private final Worker worker;
     private final List<BillableZone> billableZones;
     private double vendorBonus;
