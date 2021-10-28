@@ -9,16 +9,20 @@ public abstract class Worker {
         this.amountPerDay = amountPerDay;
     }
 
-    public abstract double getDailySalary();
-
-    public abstract double getVendorBonus(double initialBonus);
-
-    public double calculateSalary(double area, double vendorBonus) {
-        return (getPaidDays(area) * getDailySalary()) + getVendorBonus(vendorBonus);
+    public double calculateSalaryWithBonus(double area, double vendorBonus) {
+        return getSalaryForArea(area) + getVendorBonus(vendorBonus);
     }
+
+    abstract double getDailySalary();
+
+    abstract double getVendorBonus(double initialBonus);
 
     protected double getDailyRate() {
         return dailyRate;
+    }
+
+    private double getSalaryForArea(double area) {
+        return getPaidDays(area) * getDailySalary();
     }
 
     private int getPaidDays(Double area) {

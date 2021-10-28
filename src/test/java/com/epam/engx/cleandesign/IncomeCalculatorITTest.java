@@ -15,20 +15,15 @@ public class IncomeCalculatorITTest {
 
     private static final double DELTA = 0.001;
 
-    private IncomeCalculator incomeCalculator;
     private final List<Assignment> assignments = new ArrayList<>();
+    HashMap<String, Double> zoneTypeWorkPrice;
 
     @Before
     public void setUp() {
-        HashMap<String, Double> zoneTypeWorkPrice = new HashMap<>();
+        zoneTypeWorkPrice = new HashMap<>();
         zoneTypeWorkPrice.put("Wall", 15.0);
         zoneTypeWorkPrice.put("Floor", 10.0);
         zoneTypeWorkPrice.put("Ceiling", 12.0);
-        MaterialPriceCalculator materialPriceCalculator = new MaterialPriceCalculator();
-        WorkPriceCalculator workPriceCalculator = new WorkPriceCalculator(zoneTypeWorkPrice);
-        RevenueCalculator revenueCalculator = new RevenueCalculator(workPriceCalculator, materialPriceCalculator);
-        ExpensesCalculator expensesCalculator = new ExpensesCalculator();
-        incomeCalculator = new IncomeCalculator(revenueCalculator, expensesCalculator);
     }
 
     @Test
@@ -39,7 +34,7 @@ public class IncomeCalculatorITTest {
     @Test(expected = WrongZoneTypeException.class)
     public void shouldThrowExceptionWhenZoneWithWrongType() {
         assign(new SeniorWorker(250, 30), singletonList(new BillableZone("Other", fiveToFiveZone())));
-        incomeCalculator.calculate(assignments);
+        calculateBalance(assignments);
     }
 
     @Test
@@ -161,12 +156,18 @@ public class IncomeCalculatorITTest {
     }
 
     private void assign(Worker worker, List<BillableZone> billableZones) {
-        Assignment assignment = new Assignment(worker, billableZones, 50);
+        Assignment assignment = new Assignment(worker, billableZones, zoneTypeWorkPrice, 50);
         assignments.add(assignment);
     }
 
     private void assertBalance(double expected) {
-        assertEquals(expected, incomeCalculator.calculate(assignments), DELTA);
+        assertEquals(expected, calculateBalance(assignments), DELTA);
+    }
+
+    private double calculateBalance(List<Assignment> assignments) {
+        return assignments.stream()
+                .map(Assignment::calculateFundBalance)
+                .reduce(0.0, Double::sum);
     }
 
 }

@@ -4,6 +4,8 @@ import java.util.Collections;
 
 public class BillableZone {
 
+    private static final double MATERIAL_AREA_FACTOR = 10;
+
     private final String type;
     private final Zone zone;
     private ZoneWithApertures zoneWithApertures;
@@ -19,12 +21,27 @@ public class BillableZone {
         this.zoneWithApertures = zoneWithApertures;
     }
 
+//    public double getZoneBillPrice() {
+//        double billableArea = getBillableArea();
+//        getMaterialPrice(billableArea) +
+//    }
+
+
+
     public double getBillableArea() {
         return getWholeArea() - getAperturesArea();
     }
 
+    public double getMaterialsPrice() {
+        return getBillableArea() * MATERIAL_AREA_FACTOR;
+    }
+
     public String getType() {
         return type;
+    }
+
+    private double getMaterialPrice(double billableArea) {
+        return billableArea * MATERIAL_AREA_FACTOR;
     }
 
     private double getAperturesArea() {

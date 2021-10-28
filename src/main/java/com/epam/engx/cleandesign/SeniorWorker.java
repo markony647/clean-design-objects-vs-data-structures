@@ -10,7 +10,7 @@ public class SeniorWorker extends Worker {
     }
 
     @Override
-    public double getDailySalary() {
+    protected double getDailySalary() {
         return getDailyRate() * SENIOR_SALARY_FACTOR;
     }
 
