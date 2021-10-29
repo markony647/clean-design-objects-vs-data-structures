@@ -23,7 +23,7 @@ public class Assignment {
     }
 
     public double calculateFundBalance() {
-        return (calculateMaterialPriceForAllZones() + calculateWorkPriceForAllZones()) - calculateSalaryFund();
+        return calculateWorkAndMaterialPriceForAllZones() - calculateSalaryFund();
     }
 
     private double calculateSalaryFund() {
@@ -31,11 +31,19 @@ public class Assignment {
         return worker.calculateSalaryWithBonus(area, vendorBonus);
     }
 
+    private double calculateWorkAndMaterialPriceForAllZones() {
+        double price = 0.0;
+        for (BillableZone billableZone : billableZones) {
+            double workPrice = getSingleUnitPrice(billableZone.getType());
+            price += billableZone.calculateZoneBillPrice(workPrice);
+        }
+        return price;
+    }
+
     private double calculateWorkPriceForAllZones() {
         double workPrice = 0.0;
         for (BillableZone billableZone : billableZones) {
-            double billableArea = billableZone.getBillableArea();
-            workPrice += calculateWorkPriceForZone(billableArea, billableZone.getType());
+            workPrice += calculateWorkPriceForZone(billableZone);
         }
         return workPrice;
     }
@@ -44,14 +52,14 @@ public class Assignment {
         return summing(billableZones, BillableZone::getMaterialsPrice);
     }
 
-    private double calculateWorkPriceForZone(double area, String type) {
-        validateType(type);
-        return getTotalPrice(area, type);
+    private double calculateWorkPriceForZone(BillableZone billableZone) {
+        validateType(billableZone.getType());
+        return getTotalWorkPrice(billableZone);
     }
 
-    private double getTotalPrice(double area, String type) {
-        double initialPrice = area * getSingleUnitPrice(type);
-        if (isAreaLessThanDailyCapacity(area)) {
+    private double getTotalWorkPrice(BillableZone billableZone) {
+        double initialPrice = billableZone.getArea() * getSingleUnitPrice(billableZone.getType());
+        if (isAreaLessThanDailyCapacity(billableZone.getArea())) {
             return initialPrice;
         }
         return initialPrice * MULTI_DAY_PRICE_FACTOR;
@@ -67,6 +75,7 @@ public class Assignment {
     }
 
     private double getSingleUnitPrice(String type) {
+        validateType(type);
         return zoneTypeWorkPrice.get(type);
     }
 
@@ -80,7 +89,7 @@ public class Assignment {
     }
 
     private double getAllZonesBillableArea() {
-        return summing(billableZones, BillableZone::getBillableArea);
+        return summing(billableZones, BillableZone::getArea);
     }
 
     private void validateBonus(double vendorBonus) {

@@ -5,6 +5,8 @@ import java.util.Collections;
 public class BillableZone {
 
     private static final double MATERIAL_AREA_FACTOR = 10;
+    private static final int ONE_DAY_MAX_AREA = 50;
+    private static final double MULTI_DAY_PRICE_FACTOR = 1.1;
 
     private final String type;
     private final Zone zone;
@@ -21,16 +23,28 @@ public class BillableZone {
         this.zoneWithApertures = zoneWithApertures;
     }
 
-    public double getBillableArea() {
+    public double getArea() {
         return getWholeArea() - getAperturesArea();
     }
 
     public double getMaterialsPrice() {
-        return getBillableArea() * MATERIAL_AREA_FACTOR;
+        return getArea() * MATERIAL_AREA_FACTOR;
     }
 
     public String getType() {
         return type;
+    }
+
+    public double calculateZoneBillPrice(double workUnitPrice) {
+        return getMaterialsPrice() + getWorkPrice(workUnitPrice);
+    }
+
+    private double getWorkPrice(double workUnitPrice) {
+        double initialWorkPrice =  workUnitPrice * getArea();
+        if (isAreaLessThanDailyCapacity()) {
+            return initialWorkPrice;
+        }
+        return initialWorkPrice * MULTI_DAY_PRICE_FACTOR;
     }
 
     private double getAperturesArea() {
@@ -39,6 +53,10 @@ public class BillableZone {
 
     private double getWholeArea() {
         return zone.getArea();
+    }
+
+    private boolean isAreaLessThanDailyCapacity() {
+        return getArea() < ONE_DAY_MAX_AREA;
     }
 
 }
