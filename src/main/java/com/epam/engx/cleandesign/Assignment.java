@@ -7,9 +7,6 @@ import static com.epam.engx.cleandesign.SummingUtil.summing;
 
 public class Assignment {
 
-    private static final double MULTI_DAY_PRICE_FACTOR = 1.1;
-    private static final int ONE_DAY_MAX_AREA = 50;
-
     private final Worker worker;
     private final List<BillableZone> billableZones;
     private final Map<String, Double> zoneTypeWorkPrice;
@@ -26,6 +23,11 @@ public class Assignment {
         return calculateWorkAndMaterialPriceForAllZones() - calculateSalaryFund();
     }
 
+    public void setVendorBonus(double vendorBonus) {
+        validateBonus(vendorBonus);
+        this.vendorBonus = vendorBonus;
+    }
+
     private double calculateSalaryFund() {
         double area = getAllZonesBillableArea();
         return worker.calculateSalaryWithBonus(area, vendorBonus);
@@ -40,31 +42,6 @@ public class Assignment {
         return price;
     }
 
-    private double calculateWorkPriceForAllZones() {
-        double workPrice = 0.0;
-        for (BillableZone billableZone : billableZones) {
-            workPrice += calculateWorkPriceForZone(billableZone);
-        }
-        return workPrice;
-    }
-
-    private double calculateMaterialPriceForAllZones() {
-        return summing(billableZones, BillableZone::getMaterialsPrice);
-    }
-
-    private double calculateWorkPriceForZone(BillableZone billableZone) {
-        validateType(billableZone.getType());
-        return getTotalWorkPrice(billableZone);
-    }
-
-    private double getTotalWorkPrice(BillableZone billableZone) {
-        double initialPrice = billableZone.getArea() * getSingleUnitPrice(billableZone.getType());
-        if (isAreaLessThanDailyCapacity(billableZone.getArea())) {
-            return initialPrice;
-        }
-        return initialPrice * MULTI_DAY_PRICE_FACTOR;
-    }
-
     private void validateType(String type) {
         if (isNotContainsWorkType(type))
             throw new WrongZoneTypeException();
@@ -77,15 +54,6 @@ public class Assignment {
     private double getSingleUnitPrice(String type) {
         validateType(type);
         return zoneTypeWorkPrice.get(type);
-    }
-
-    private boolean isAreaLessThanDailyCapacity(double area) {
-        return area < ONE_DAY_MAX_AREA;
-    }
-
-    public void setVendorBonus(double vendorBonus) {
-        validateBonus(vendorBonus);
-        this.vendorBonus = vendorBonus;
     }
 
     private double getAllZonesBillableArea() {

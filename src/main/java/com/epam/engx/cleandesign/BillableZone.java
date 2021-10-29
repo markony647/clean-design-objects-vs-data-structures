@@ -27,16 +27,16 @@ public class BillableZone {
         return getWholeArea() - getAperturesArea();
     }
 
-    public double getMaterialsPrice() {
-        return getArea() * MATERIAL_AREA_FACTOR;
+    public double calculateZoneBillPrice(double workUnitPrice) {
+        return getMaterialsPrice() + getWorkPrice(workUnitPrice);
     }
 
     public String getType() {
         return type;
     }
 
-    public double calculateZoneBillPrice(double workUnitPrice) {
-        return getMaterialsPrice() + getWorkPrice(workUnitPrice);
+    private double getMaterialsPrice() {
+        return getArea() * MATERIAL_AREA_FACTOR;
     }
 
     private double getWorkPrice(double workUnitPrice) {
