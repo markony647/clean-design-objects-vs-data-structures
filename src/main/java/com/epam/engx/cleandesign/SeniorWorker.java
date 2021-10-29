@@ -15,7 +15,7 @@ public class SeniorWorker extends Worker {
     }
 
     @Override
-    public double getVendorBonus(double initialBonus) {
+    protected double getVendorBonus(double initialBonus) {
         return initialBonus * SENIOR_BONUS_FACTOR;
     }
 }

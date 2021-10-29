@@ -12,7 +12,7 @@ public class JuniorWorker extends Worker {
     }
 
     @Override
-    double getVendorBonus(double initialBonus) {
+    protected double getVendorBonus(double initialBonus) {
         return initialBonus;
     }
 }

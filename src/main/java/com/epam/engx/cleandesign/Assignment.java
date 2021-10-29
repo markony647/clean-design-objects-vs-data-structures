@@ -3,8 +3,6 @@ package com.epam.engx.cleandesign;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.engx.cleandesign.SummingUtil.summing;
-
 public class Assignment {
 
     private final Worker worker;
@@ -57,7 +55,9 @@ public class Assignment {
     }
 
     private double getAllZonesBillableArea() {
-        return summing(billableZones, BillableZone::getArea);
+        return billableZones.stream()
+                .map(BillableZone::getArea)
+                .reduce(0.0, Double::sum);
     }
 
     private void validateBonus(double vendorBonus) {
