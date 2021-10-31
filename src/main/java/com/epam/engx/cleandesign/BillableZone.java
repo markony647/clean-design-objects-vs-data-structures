@@ -9,22 +9,20 @@ public class BillableZone {
     private static final double MULTI_DAY_PRICE_FACTOR = 1.1;
 
     private final String type;
-    private final Zone zone;
-    private ZoneWithApertures zoneWithApertures;
+    private final ZoneWithApertures zoneWithApertures;
 
     public BillableZone(String type, Zone wholeZone) {
         this.type = type;
-        this.zone = wholeZone;
-        this.zoneWithApertures = new ZoneWithApertures(Collections.emptyList());
+        this.zoneWithApertures = new ZoneWithApertures(wholeZone, Collections.emptyList());
     }
 
-    public BillableZone(String type, Zone wholeZone, ZoneWithApertures zoneWithApertures) {
-        this(type, wholeZone);
+    public BillableZone(String type, ZoneWithApertures zoneWithApertures) {
+        this.type = type;
         this.zoneWithApertures = zoneWithApertures;
     }
 
     public double getArea() {
-        return getWholeArea() - getAperturesArea();
+        return zoneWithApertures.getArea();
     }
 
     public double calculateZoneBillPrice(double workUnitPrice) {
@@ -45,14 +43,6 @@ public class BillableZone {
             return initialWorkPrice;
         }
         return initialWorkPrice * MULTI_DAY_PRICE_FACTOR;
-    }
-
-    private double getAperturesArea() {
-        return zoneWithApertures.getArea();
-    }
-
-    private double getWholeArea() {
-        return zone.getArea();
     }
 
     private boolean isAreaLessThanDailyCapacity() {

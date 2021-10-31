@@ -14,4 +14,12 @@ public class Zone {
         return width * height;
     }
 
+    protected double getHeight() {
+        return height;
+    }
+
+    protected double getWidth() {
+        return width;
+    }
+
 }

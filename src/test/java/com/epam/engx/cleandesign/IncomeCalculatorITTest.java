@@ -57,9 +57,9 @@ public class IncomeCalculatorITTest {
     }
 
     private BillableZone getWallWithApertures() {
-        List<Zone> zones = asList(new Zone(9.0, 5.0), new Zone(9.0, 4.0));
-        ZoneWithApertures zoneWithApertures = new ZoneWithApertures(zones);
-        return new BillableZone("Wall", new Zone(10.0, 10.0), zoneWithApertures);
+        List<Zone> aperturesZones = asList(new Zone(9.0, 5.0), new Zone(9.0, 4.0));
+        Zone wholeZone = new Zone(10.0, 10.0);
+        return new BillableZone("Wall", new ZoneWithApertures(wholeZone, aperturesZones));
     }
 
     @Test
