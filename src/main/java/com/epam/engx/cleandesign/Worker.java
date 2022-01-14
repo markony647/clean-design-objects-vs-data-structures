@@ -1,31 +1,32 @@
 package com.epam.engx.cleandesign;
 
-public class Worker {
-    private double dailyRate;
-    private double amountPerDay;
-    private boolean isJunior = false;
+public abstract class Worker {
+    private final double dailyRate;
+    private final double amountPerDay;
 
     public Worker(double dailyRate, double amountPerDay) {
         this.dailyRate = dailyRate;
         this.amountPerDay = amountPerDay;
     }
 
-    public Worker(double dailyRate, double amountPerDay, boolean isJunior) {
-        this.dailyRate = dailyRate;
-        this.amountPerDay = amountPerDay;
-        this.isJunior = isJunior;
+    public double calculateSalaryWithBonus(double area, double vendorBonus) {
+        return getSalaryForArea(area) + getVendorBonus(vendorBonus);
     }
 
-    public double getDailyRate() {
+    abstract double getDailySalary();
+
+    abstract double getVendorBonus(double initialBonus);
+
+    protected double getDailyRate() {
         return dailyRate;
     }
 
-    public double getAmountPerDay() {
-        return amountPerDay;
+    private double getSalaryForArea(double area) {
+        return getPaidDays(area) * getDailySalary();
     }
 
-    public boolean isJunior() {
-        return isJunior;
+    private int getPaidDays(Double area) {
+        return (int) Math.ceil(area / amountPerDay);
     }
 
 }
